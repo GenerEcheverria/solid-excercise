@@ -40,9 +40,7 @@ export const pokemonGateway: PokemonStore = {
     const params = { firstFamilyId, secondFamilyId }
     try {
       const response = await runQuery(query, params)
-      const sortedResults = response.results.sort((a, b) => b.probability.id - a.probability.id)
-      const topThreeResults = sortedResults.slice(0, 3)
-      return topThreeResults
+      return response.results
     } catch (error) {
       throw new Error('Pokemon country not found')
     }

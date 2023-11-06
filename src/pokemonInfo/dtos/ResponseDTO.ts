@@ -1,8 +1,7 @@
-import { Move, PokemonData } from './PokemonData'
+import { PokemonData } from './PokemonData'
 
 export type ResponseDTO = {
   baseInformation: PokemonData
   families: string[]
   countries: string[]
-  moveSet?: Move[]
 }

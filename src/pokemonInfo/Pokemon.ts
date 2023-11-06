@@ -6,20 +6,24 @@ export const getPokemon = async (
   id: number, { getPokemonData, getPokemonCountries, getPokemonFamilies }: PokemonStore
 ) => {
   const pokemon = await getPokemonData(id)
-  const family = await getPokemonFamilies(id)
-  const country = await getPokemonCountries(family)
+  const families = await getPokemonFamilies(id)
+  const countries = await getPokemonCountries(families)
 
-  const filteredPokemonMoveSet = () => {
+  const filteredMovesetPokemon = () => {
     const result: Move[] = pokemon.moves.sort((a, b) => b.level - a.level)
+    pokemon.moves = result.slice(0, 4)
+    return pokemon
+  }
 
-    return result.slice(0, 4)
+  const filteredPokemonCountries = () => {
+    countries.sort((a, b) => parseInt(b[2]) - parseInt(a[2]))
+    return countries.slice(0, 3)
   }
 
   const pokemonData: ResponseDTO = {
-    baseInformation: pokemon,
-    families: family,
-    countries: country,
-    moveSet: filteredPokemonMoveSet()
+    baseInformation: filteredMovesetPokemon(),
+    families,
+    countries: filteredPokemonCountries()
   }
   return pokemonData
 }
